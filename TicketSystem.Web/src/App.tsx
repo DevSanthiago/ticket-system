@@ -13,8 +13,6 @@ import { SoftwareTicketsList } from "./pages/SoftwareTicketsList";
 import { ChecklistPage } from "./pages/ChecklistPage";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { Layout } from "./components/Layout";
-import { ForgotPassword } from "./pages/ForgotPassword";
-import { RequestAccess } from "./pages/RequestAccess";
 import { CockpitAdminDashboard } from "./pages/CockpitAdminDashboard";
 import { ProductionLinesPage } from "./pages/ProductionLinesPage";
 import { PrefixesPage } from "./pages/PrefixesPage";
@@ -23,8 +21,6 @@ function App() {
     return (
         <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/request-access" element={<RequestAccess />} />
 
             <Route element={<PrivateRoute />}>
                 <Route element={<Layout />}>

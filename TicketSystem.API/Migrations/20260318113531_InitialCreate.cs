@@ -34,32 +34,6 @@ namespace TicketSystem.API.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FullName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Registration = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PasswordHash = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Role = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ResolverDepartment = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "ProductionLines",
                 columns: table => new
                 {
@@ -80,18 +54,6 @@ namespace TicketSystem.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductionLines", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductionLines_Users_CreatedByUserId",
-                        column: x => x.CreatedByUserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ProductionLines_Users_UpdatedByUserId",
-                        column: x => x.UpdatedByUserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -101,7 +63,8 @@ namespace TicketSystem.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TargetDepartment = table.Column<int>(type: "int", nullable: false),
+                    TargetDepartment = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     TicketType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ConfirmationToken = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false)
@@ -126,6 +89,8 @@ namespace TicketSystem.API.Migrations
                     ChecklistData = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RequesterId = table.Column<int>(type: "int", nullable: false),
+                    RequesterName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ResolverId = table.Column<int>(type: "int", nullable: true),
                     ResolverName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -146,12 +111,6 @@ namespace TicketSystem.API.Migrations
                         principalTable: "ProductionLines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AutomationTickets_Users_RequesterId",
-                        column: x => x.RequesterId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -161,7 +120,8 @@ namespace TicketSystem.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TargetDepartment = table.Column<int>(type: "int", nullable: false),
+                    TargetDepartment = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     SetupType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ConfirmationToken = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false)
@@ -183,6 +143,8 @@ namespace TicketSystem.API.Migrations
                     ChecklistJson = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RequesterId = table.Column<int>(type: "int", nullable: false),
+                    RequesterName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ResolverId = table.Column<int>(type: "int", nullable: true),
                     ResolverName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -200,17 +162,6 @@ namespace TicketSystem.API.Migrations
                         principalTable: "ProductionLines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SetupTickets_Users_RequesterId",
-                        column: x => x.RequesterId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SetupTickets_Users_ResolverId",
-                        column: x => x.ResolverId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -220,7 +171,8 @@ namespace TicketSystem.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TargetDepartment = table.Column<int>(type: "int", nullable: false),
+                    TargetDepartment = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ConfirmationToken = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -235,6 +187,8 @@ namespace TicketSystem.API.Migrations
                     LineStoppedTime = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RequesterId = table.Column<int>(type: "int", nullable: false),
+                    RequesterName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ResolverId = table.Column<int>(type: "int", nullable: true),
                     ResolverName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -250,12 +204,6 @@ namespace TicketSystem.API.Migrations
                         column: x => x.ProductionLineId,
                         principalTable: "ProductionLines",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SoftwareTickets_Users_RequesterId",
-                        column: x => x.RequesterId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -265,7 +213,8 @@ namespace TicketSystem.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TargetDepartment = table.Column<int>(type: "int", nullable: false),
+                    TargetDepartment = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     TestType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ConfirmationToken = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false)
@@ -283,6 +232,8 @@ namespace TicketSystem.API.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ChecklistStatus = table.Column<int>(type: "int", nullable: false),
                     RequesterId = table.Column<int>(type: "int", nullable: false),
+                    RequesterName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ResolverId = table.Column<int>(type: "int", nullable: true),
                     ResolverName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -300,29 +251,13 @@ namespace TicketSystem.API.Migrations
                         principalTable: "ProductionLines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TestTickets_Users_RequesterId",
-                        column: x => x.RequesterId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AutomationTickets_RequesterId",
-                table: "AutomationTickets",
-                column: "RequesterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AutomationTickets_ProductionLineId",
                 table: "AutomationTickets",
                 column: "ProductionLineId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductionLines_CreatedByUserId",
-                table: "ProductionLines",
-                column: "CreatedByUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductionLines_IsActive",
@@ -341,29 +276,9 @@ namespace TicketSystem.API.Migrations
                 column: "Prefix");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductionLines_UpdatedByUserId",
-                table: "ProductionLines",
-                column: "UpdatedByUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SetupTickets_RequesterId",
-                table: "SetupTickets",
-                column: "RequesterId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SetupTickets_ProductionLineId",
                 table: "SetupTickets",
                 column: "ProductionLineId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SetupTickets_ResolverId",
-                table: "SetupTickets",
-                column: "ResolverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SoftwareTickets_RequesterId",
-                table: "SoftwareTickets",
-                column: "RequesterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SoftwareTickets_ProductionLineId",
@@ -371,26 +286,9 @@ namespace TicketSystem.API.Migrations
                 column: "ProductionLineId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestTickets_RequesterId",
-                table: "TestTickets",
-                column: "RequesterId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TestTickets_ProductionLineId",
                 table: "TestTickets",
                 column: "ProductionLineId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_Registration",
-                table: "Users",
-                column: "Registration",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_Username",
-                table: "Users",
-                column: "Username",
-                unique: true);
         }
 
         /// <inheritdoc />
@@ -413,9 +311,6 @@ namespace TicketSystem.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductionLines");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

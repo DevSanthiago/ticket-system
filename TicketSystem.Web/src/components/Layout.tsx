@@ -7,7 +7,7 @@ import { Sidebar } from "./Sidebar";
 import { Footer } from "./Footer";
 import { useState } from "react";
 import logoImg from "../assets/img/new-logo-transparent-branding.svg";
-import type { User } from "../types";
+import { useAuth } from "../hooks/useAuth";
 
 export const Layout = () => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -43,12 +43,9 @@ export const Layout = () => {
         return "Boa noite";
     });
 
-    const [fullUser] = useState<User | null>(() => {
-        const stored = localStorage.getItem("ticket_user");
-        return stored ? JSON.parse(stored) : null;
-    });
+    const { user: fullUser } = useAuth();
 
-    const userName = fullUser?.name?.split(" ")[0] || "Colaborador";
+    const userName = fullUser?.name? fullUser.name.trim().split(" ")[0] : "Colaborador";
 
     const getRoleBadge = (roles: string[] | undefined) => {
         const firstRole = roles?.[0]?.toLowerCase();

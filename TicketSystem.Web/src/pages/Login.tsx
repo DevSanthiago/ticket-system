@@ -204,18 +204,18 @@ export const Login = () => {
                             fontSize="xs"
                             color="blue.500"
                             fontWeight="normal"
-                            onClick={() => navigate("/forgot-password")}
+                            onClick={() => window.open("http://localhost:84/", "_blank")}
                         >
-                            Esqueceu a senha?
+                            Esqueci minha senha
                         </Button>
                         <Button
                             variant="link"
                             fontSize="xs"
                             color="blue.500"
                             fontWeight="normal"
-                            onClick={() => navigate("/request-access")}
+                            onClick={() => window.open("http://localhost:84/auth/request-account", "_blank")}
                         >
-                            Solicitar acesso
+                            Ainda não tenho acesso
                         </Button>
                     </Flex>
 

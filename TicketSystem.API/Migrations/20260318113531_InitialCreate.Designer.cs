@@ -12,8 +12,8 @@ using TicketSystem.API.Data;
 namespace TicketSystem.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260303182052_RolesTable")]
-    partial class RolesTable
+    [Migration("20260318113531_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,6 +76,9 @@ namespace TicketSystem.API.Migrations
                     b.Property<int>("RequesterId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RequesterName")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Observation")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -100,8 +103,9 @@ namespace TicketSystem.API.Migrations
                     b.Property<int?>("SystemSupportType")
                         .HasColumnType("int");
 
-                    b.Property<int>("TargetDepartment")
-                        .HasColumnType("int");
+                    b.Property<string>("TargetDepartment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("ResolverId")
                         .HasColumnType("int");
@@ -116,8 +120,6 @@ namespace TicketSystem.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RequesterId");
 
                     b.HasIndex("ProductionLineId");
 
@@ -193,8 +195,6 @@ namespace TicketSystem.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedByUserId");
-
                     b.HasIndex("IsActive");
 
                     b.HasIndex("LineName")
@@ -202,30 +202,7 @@ namespace TicketSystem.API.Migrations
 
                     b.HasIndex("Prefix");
 
-                    b.HasIndex("UpdatedByUserId");
-
                     b.ToTable("ProductionLines");
-                });
-
-            modelBuilder.Entity("TicketSystem.API.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("TicketSystem.API.Models.SetupTickets", b =>
@@ -270,6 +247,9 @@ namespace TicketSystem.API.Migrations
                     b.Property<int>("RequesterId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RequesterName")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Observation")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -292,8 +272,9 @@ namespace TicketSystem.API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TargetDepartment")
-                        .HasColumnType("int");
+                    b.Property<string>("TargetDepartment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("ResolverId")
                         .HasColumnType("int");
@@ -303,11 +284,7 @@ namespace TicketSystem.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RequesterId");
-
                     b.HasIndex("ProductionLineId");
-
-                    b.HasIndex("ResolverId");
 
                     b.ToTable("SetupTickets");
                 });
@@ -341,6 +318,9 @@ namespace TicketSystem.API.Migrations
                     b.Property<int>("RequesterId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RequesterName")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("NecessaryInfo")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -365,8 +345,9 @@ namespace TicketSystem.API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TargetDepartment")
-                        .HasColumnType("int");
+                    b.Property<string>("TargetDepartment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("ResolverId")
                         .HasColumnType("int");
@@ -375,8 +356,6 @@ namespace TicketSystem.API.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RequesterId");
 
                     b.HasIndex("ProductionLineId");
 
@@ -422,6 +401,9 @@ namespace TicketSystem.API.Migrations
                     b.Property<int>("RequesterId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RequesterName")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Observation")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -439,8 +421,9 @@ namespace TicketSystem.API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TargetDepartment")
-                        .HasColumnType("int");
+                    b.Property<string>("TargetDepartment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("ResolverId")
                         .HasColumnType("int");
@@ -453,168 +436,51 @@ namespace TicketSystem.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RequesterId");
-
                     b.HasIndex("ProductionLineId");
 
                     b.ToTable("TestTickets");
                 });
 
-            modelBuilder.Entity("TicketSystem.API.Models.Users", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Registration")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResolverDepartment")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Registration")
-                        .IsUnique();
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("TicketSystem.API.Models.AutomationTickets", b =>
                 {
-                    b.HasOne("TicketSystem.API.Models.Users", "Requester")
-                        .WithMany()
-                        .HasForeignKey("RequesterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TicketSystem.API.Models.ProductionLine", "ProductionLine")
                         .WithMany("AutomationTickets")
                         .HasForeignKey("ProductionLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Requester");
-
                     b.Navigation("ProductionLine");
-                });
-
-            modelBuilder.Entity("TicketSystem.API.Models.ProductionLine", b =>
-                {
-                    b.HasOne("TicketSystem.API.Models.Users", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("TicketSystem.API.Models.Users", "UpdatedByUser")
-                        .WithMany()
-                        .HasForeignKey("UpdatedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("UpdatedByUser");
                 });
 
             modelBuilder.Entity("TicketSystem.API.Models.SetupTickets", b =>
                 {
-                    b.HasOne("TicketSystem.API.Models.Users", "Requester")
-                        .WithMany()
-                        .HasForeignKey("RequesterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TicketSystem.API.Models.ProductionLine", "ProductionLine")
                         .WithMany("SetupTickets")
                         .HasForeignKey("ProductionLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TicketSystem.API.Models.Users", "Resolver")
-                        .WithMany()
-                        .HasForeignKey("ResolverId");
-
-                    b.Navigation("Requester");
-
                     b.Navigation("ProductionLine");
-
-                    b.Navigation("Resolver");
                 });
 
             modelBuilder.Entity("TicketSystem.API.Models.SoftwareTickets", b =>
                 {
-                    b.HasOne("TicketSystem.API.Models.Users", "Requester")
-                        .WithMany()
-                        .HasForeignKey("RequesterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TicketSystem.API.Models.ProductionLine", "ProductionLine")
                         .WithMany()
                         .HasForeignKey("ProductionLineId");
-
-                    b.Navigation("Requester");
 
                     b.Navigation("ProductionLine");
                 });
 
             modelBuilder.Entity("TicketSystem.API.Models.TestTickets", b =>
                 {
-                    b.HasOne("TicketSystem.API.Models.Users", "Requester")
-                        .WithMany()
-                        .HasForeignKey("RequesterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TicketSystem.API.Models.ProductionLine", "ProductionLine")
                         .WithMany("TestTickets")
                         .HasForeignKey("ProductionLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Requester");
-
                     b.Navigation("ProductionLine");
-                });
-
-            modelBuilder.Entity("TicketSystem.API.Models.Users", b =>
-                {
-                    b.HasOne("TicketSystem.API.Models.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("TicketSystem.API.Models.ProductionLine", b =>
@@ -624,11 +490,6 @@ namespace TicketSystem.API.Migrations
                     b.Navigation("SetupTickets");
 
                     b.Navigation("TestTickets");
-                });
-
-            modelBuilder.Entity("TicketSystem.API.Models.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
