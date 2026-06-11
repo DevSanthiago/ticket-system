@@ -312,7 +312,7 @@ npm run dev
 
 - **Desenvolvedor:** Johnatan dos Santos Reis
 - **GitHub:** [DevSanthiago](https://github.com/DevSanthiago)
-- **Organização:** Engenharia de Automação — Dev Santhiago
+- **Projeto:** pessoal — Dev Santhiago
 
 ---
 
