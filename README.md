@@ -25,17 +25,17 @@ O sistema suporta quatro tipos de chamados, cada um com seu próprio fluxo de es
 | Tipo | Departamento Destino | Casos de Uso |
 |---|---|---|
 | **Setup** | Engenharia de Setup | Setup de linha, solicitação de materiais |
-| **Automação** | Engenharia de Sistemas | Monitoring, Modular System, Industrial System, Label Validation, Product |
-| **Teste** | Engenharia de Teste | Final Test, arquivos de log para linhas ML |
+| **Automação** | Engenharia de Sistemas | Sistemas de linha, integrações industriais, validação de etiquetas, testes de produto |
+| **Teste** | Engenharia de Teste | Testes finais e coleta de logs das linhas de produção |
 | **Software** | Engenharia de Software | Chaves Windows, atualizações, firmware, bugs em sistemas |
 
-A segurança é gerenciada via **RBAC (Role-Based Access Control)** com **15 roles granulares** delegadas a um sistema externo de controle de acesso (AccessControlAPI), integrando-se ao ecossistema corporativo existente sem duplicar gestão de usuários.
+A segurança é gerenciada via **RBAC (Role-Based Access Control)** com **15 roles granulares** delegadas a um provedor de identidade externo (AccessControlAPI), sem duplicar a gestão de usuários.
 
 ---
 
 ## 🌟 Funcionalidades Principais
 
-- ✅ **Autenticação Delegada:** Login via credenciais corporativas com integração à AccessControlAPI. O token JWT resultante carrega todos os claims de roles necessários para as decisões de autorização.
+- ✅ **Autenticação Delegada:** Login integrado a um provedor de identidade externo (AccessControlAPI). O token JWT resultante carrega todos os claims de roles necessários para as decisões de autorização.
 - ✅ **Fluxo de Tickets com Handshake por Token:** Cada ticket gerado recebe um token de confirmação de 4 dígitos. O responsável só consegue assumir o chamado apresentando esse token, garantindo rastreabilidade e evitando assumções indevidas.
 - ✅ **Integração Nativa com WhatsApp:** Ao abrir, assumir ou finalizar um ticket, uma mensagem estruturada com emojis, timeline e duração do atendimento é copiada automaticamente para o clipboard e o grupo do departamento é aberto no WhatsApp.
 - ✅ **Cockpit Administrativo:** Painel exclusivo para o role `admin` com gestão completa de linhas de produção e prefixos, incluindo ativação/desativação e proteção contra exclusão de linhas com tickets vinculados.
@@ -62,7 +62,7 @@ Open ──── Start(token) ──► InProgress ──── Resolve() ─�
 
 ### Autenticação e Autorização
 
-A autenticação é **completamente delegada** à AccessControlAPI corporativa:
+A autenticação é **completamente delegada** a um provedor de identidade externo (AccessControlAPI):
 
 1. O frontend envia matrícula + senha.
 2. A API repassa para a AccessControlAPI e obtém um token externo.
@@ -316,4 +316,4 @@ npm run dev
 
 ---
 
-_Este projeto é uma ferramenta interna protegida sob a **Licença MIT**._
+_Projeto pessoal de portfólio, distribuído sob a **Licença MIT**._
