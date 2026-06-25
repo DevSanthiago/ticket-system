@@ -299,10 +299,10 @@ npm run dev
 | `admin` | ✅ | ✅ | ✅ | ✅ |
 | `requester` | ✅ | ❌ | ❌ | ❌ |
 | `operator` | ✅ | ❌ | ❌ | ❌ |
-| `setup-agent` | ❌ | ✅ (Setup) | ❌ | ❌ |
-| `automation-agent` | ❌ | ✅ (Automação) | ❌ | ❌ |
-| `test-agent` | ❌ | ✅ (Teste) | ❌ | ❌ |
-| `software-agent` | ✅ | ❌ | ✅ (Software) | ❌ |
+| `setup-resolver` | ❌ | ✅ (Setup) | ❌ | ❌ |
+| `automation-resolver` | ❌ | ✅ (Automação) | ❌ | ❌ |
+| `test-resolver` | ❌ | ✅ (Teste) | ❌ | ❌ |
+| `software-resolver` | ✅ | ❌ | ✅ (Software) | ❌ |
 | `software-specialist` | ✅ | ✅ | ✅ | ❌ |
 | `specialist` | ✅ | ✅ | ❌ | ❌ |
 
