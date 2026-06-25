@@ -138,7 +138,7 @@ export const ProductionLineModal = ({
                         <FormControl isInvalid={!!errors.lineName} isRequired>
                             <FormLabel color={textColor} fontSize="sm" fontWeight="bold">Nome da Linha</FormLabel>
                             <Input
-                                placeholder="Ex: MB01, ZB01"
+                                placeholder="Ex: MB01, ML01"
                                 value={formData.lineName}
                                 onChange={handleLineNameChange}
                                 textTransform="uppercase"

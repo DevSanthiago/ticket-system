@@ -156,7 +156,7 @@ export const Dashboard = () => {
                             colorScheme="blue"
                             icon={AnimatedBotMessageSquare}
                             description="Se o problema da sua linha for software, você deve abrir um ticket para o departamento de engenharia de automação."
-                                subDescription="Suporte aos sistemas, Modular System, Industrial System, Monitoring, Sistemas do produto, Cameras/Label Validation"
+                                subDescription="Suporte aos sistemas, Modular System, Industrial System, Monitoring, Sistemas de produto, Cameras/Label Validation"
                             onClick={() => navigate("/opentickets/automation")}
                         />
                         <ActionCard

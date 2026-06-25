@@ -670,7 +670,7 @@ export const AutomationForm = () => {
                                 >
                                     <AnimatedChartSpline size={28} isHovered={hoveredProduct} />
                                     <Text fontSize="lg" fontWeight={toolType === 1 ? "bold" : "medium"}>
-                                        Ensaio de Product
+                                        Ensaio de Produto
                                     </Text>
                                 </Button>
                             )}

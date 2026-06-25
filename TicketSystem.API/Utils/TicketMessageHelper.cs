@@ -511,10 +511,8 @@ namespace TicketSystem.API.Utils
         private static string FormatLineCategory(string category) => category switch
         {
             "ML" => "Linha ML",
-            "SA" => "Laboratório SA Product",
-            "LAB" => "Laboratório SA Product",
-            "SOLICITANTEING" => "Linha Monitoring",
-            "INDUSTRIALSYSTEM" => "Linha Industrial System",
+            "SA" => "Laboratório SA",
+            "LAB" => "Laboratório SA",
             "ESTEIRA" => "Esteira de Teste",
             "MANUAL" => "Posição Manual",
             "LOGS" => "Linhas LOGS",

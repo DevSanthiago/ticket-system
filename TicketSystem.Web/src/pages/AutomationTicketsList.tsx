@@ -298,7 +298,7 @@ export const AutomationTicketsList = () => {
         return type && names[type] ? names[type] : type || "N/A";
     };
     const getToolTypeName = (type?: string): string => {
-        const names: Record<string, string> = { "LabelValidation": "Label Validation", "ProductTesting": "Ensaio de Product" };
+        const names: Record<string, string> = { "LabelValidation": "Label Validation", "ProductTesting": "Ensaio de Produto" };
         return type && names[type] ? names[type] : type || "N/A";
     };
     const getLineSystemName = (system?: string): string => {
