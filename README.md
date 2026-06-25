@@ -18,9 +18,11 @@ O projeto é organizado como um **Monorepo**, reunindo API e Web em um único re
 
 ## ✨ Sobre o Projeto
 
-O Ticket System nasceu de uma necessidade real de operação: agilizar e rastrear os chamados entre a produção e os departamentos de engenharia, eliminando comunicação informal e sem histórico.
+O **Ticket System** resolve um problema recorrente de operações industriais: abrir, rotear e acompanhar chamados responsávels entre quem opera a linha e as equipes de engenharia, trocando canais informais por um fluxo **auditável de ponta a ponta**.
 
-O sistema suporta quatro tipos de chamados, cada um com seu próprio fluxo de estados, regras de negócio e integrações:
+A modelagem segue **Domain-Driven Design**: cada tipo de chamado é uma entidade rica, com invariantes protegidas por *factory methods*, transições de estado encapsuladas (`Open → InProgress → Resolved`) e erros de negócio expressos por *domain exceptions*. A API REST (ASP.NET Core 8) é fina — toda a regra vive no domínio, não nos controllers.
+
+O sistema atende quatro fluxos de chamado, cada um com formulário, regras e integrações próprias:
 
 | Tipo | Departamento Destino | Casos de Uso |
 |---|---|---|
@@ -29,7 +31,7 @@ O sistema suporta quatro tipos de chamados, cada um com seu próprio fluxo de es
 | **Teste** | Engenharia de Teste | Testes finais e coleta de logs das linhas de produção |
 | **Software** | Engenharia de Software | Chaves Windows, atualizações, firmware, bugs em sistemas |
 
-A segurança é gerenciada via **RBAC (Role-Based Access Control)** com **15 roles granulares** delegadas a um provedor de identidade externo (AccessControlAPI), sem duplicar a gestão de usuários.
+A autorização usa **RBAC** com papéis granulares e **identidade delegada a um provedor externo** (AccessControlAPI): o backend não mantém base de usuários própria — valida credenciais no provedor, recupera os papéis e emite um **JWT** *stateless* com os *claims* necessários. Resultado: acesso auditável, sem duplicar a gestão de usuários.
 
 ---
 
@@ -39,7 +41,7 @@ A segurança é gerenciada via **RBAC (Role-Based Access Control)** com **15 rol
 - ✅ **Fluxo de Tickets com Handshake por Token:** Cada ticket gerado recebe um token de confirmação de 4 dígitos. O responsável só consegue assumir o chamado apresentando esse token, garantindo rastreabilidade e evitando assumções indevidas.
 - ✅ **Integração Nativa com WhatsApp:** Ao abrir, assumir ou finalizar um ticket, uma mensagem estruturada com emojis, timeline e duração do atendimento é copiada automaticamente para o clipboard e o grupo do departamento é aberto no WhatsApp.
 - ✅ **Cockpit Administrativo:** Painel exclusivo para o role `admin` com gestão completa de linhas de produção e prefixos, incluindo ativação/desativação e proteção contra exclusão de linhas com tickets vinculados.
-- ✅ **Checklist Pós-Atendimento:** Para tickets de Setup do tipo `LineSetup`, ao finalizar o atendimento o status de checklist muda para `Pending`, exigindo que o requester preencha e assine digitalmente o checklist antes de encerrar o ciclo.
+- ✅ **Checklist Pós-Atendimento:** Para tickets de Setup do tipo `LineSetup`, ao finalizar o atendimento o status de checklist muda para `Pending`, exigindo que o solicitante preencha e assine digitalmente o checklist antes de encerrar o ciclo.
 - ✅ **UI/UX de Alto Nível:** Skeletons em todas as telas, ícones 100% animados com Framer Motion via hook customizado, sidebar com expansão animada, sistema de temas por departamento com suporte completo a dark/light mode e alertas contextuais com SweetAlert2.
 - ✅ **Seed Automático:** Ao iniciar, a API verifica e popula automaticamente as linhas de produção e prefixos iniciais caso o banco esteja vazio.
 
@@ -86,7 +88,7 @@ Os controllers utilizam `[Authorize(Roles = "...")]` com constantes definidas em
 Ticket-System/
 ├── TicketSystem.API/                  # Backend ASP.NET Core
 │   ├── Controllers/                   # Endpoints REST
-│   │   ├── AdminCockpitController.cs  # Gestão de linhas e prefixos (Admin only)
+│   │   ├── AdminCockpitController.cs  # Gestão de linhas e prefixos (admin only)
 │   │   ├── AuthController.cs          # Login e validação de token
 │   │   ├── AutomationTicketsController.cs
 │   │   ├── SetupTicketsController.cs
@@ -294,17 +296,15 @@ npm run dev
 
 ## 🔐 Roles e Permissões
 
-| Role | Abrir Ticket | Assumir (Setup/Automação/Teste) | Assumir (Software) | Cockpit ADM |
-|---|:---:|:---:|:---:|:---:|
-| `admin` | ✅ | ✅ | ✅ | ✅ |
-| `requester` | ✅ | ❌ | ❌ | ❌ |
-| `operator` | ✅ | ❌ | ❌ | ❌ |
-| `setup-resolver` | ❌ | ✅ (Setup) | ❌ | ❌ |
-| `automation-resolver` | ❌ | ✅ (Automação) | ❌ | ❌ |
-| `test-resolver` | ❌ | ✅ (Teste) | ❌ | ❌ |
-| `software-resolver` | ✅ | ❌ | ✅ (Software) | ❌ |
-| `software-specialist` | ✅ | ✅ | ✅ | ❌ |
-| `specialist` | ✅ | ✅ | ❌ | ❌ |
+| Role | Abrir Ticket | Assumir e Resolver | Cockpit Administrativo |
+|---|:---:|:---:|:---:|
+| `admin` | ✅ | ✅ (todos os departamentos) | ✅ |
+| `requester` | ✅ | ❌ | ❌ |
+| `agent` | ❌ | ✅ (departamento atribuído) | ❌ |
+| `supervisor` | ✅ | ✅ (departamento atribuído) | ❌ |
+| `viewer` | ❌ | ❌ | ❌ |
+
+> Os papéis acima são ilustrativos da matriz de permissões; os papéis efetivos vêm do provedor de identidade externo e são resolvidos em tempo de login.
 
 ---
 
