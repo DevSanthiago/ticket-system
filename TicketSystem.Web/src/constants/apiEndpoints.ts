@@ -60,6 +60,11 @@
         GET_PREFIXES: '/admin-cockpit/production-lines/prefixes',
         CREATE_PREFIX: '/admin-cockpit/production-lines/prefixes',
         DELETE_PREFIX: (id: number) => `/admin-cockpit/production-lines/prefixes/${id}`,
+
+        GET_ALL_USERS: '/admin-cockpit/users',
+        CREATE_USER: '/admin-cockpit/users',
+        UPDATE_USER: (id: number | string) => `/admin-cockpit/users/${id}`,
+        DELETE_USER: (id: number | string) => `/admin-cockpit/users/${id}`,
     },
     
     SUPPORT: {
