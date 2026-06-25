@@ -320,7 +320,7 @@ export const SetupTicketsList = () => {
     const canStartTicket = getCanStartTicket();
 
     const canFillChecklist = currentUser?.roles?.some(r =>
-        ['requester', 'admin', 'tecnicosetup'].includes(r.toLowerCase())
+        ['requester', 'admin', 'setup-agent'].includes(r.toLowerCase())
     ) ?? false;
 
     return (

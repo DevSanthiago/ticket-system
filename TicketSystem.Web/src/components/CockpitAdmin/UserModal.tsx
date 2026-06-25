@@ -30,9 +30,9 @@ interface UserModalProps {
 
 const ROLES = [
     { value: "Requester", label: "Requester" },
-    { value: "SetupAgent", label: "Responsável Setup" },
-    { value: "AutomationAgent", label: "Responsável Automação" },
-    { value: "TestAgent", label: "Responsável Teste" },
+    { value: "SetupAgent", label: "Agente Setup" },
+    { value: "AutomationAgent", label: "Agente Automação" },
+    { value: "TestAgent", label: "Agente Teste" },
     { value: "Admin", label: "Admin" },
 ];
 

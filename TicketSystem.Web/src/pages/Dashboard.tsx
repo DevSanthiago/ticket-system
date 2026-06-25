@@ -26,7 +26,7 @@ export const Dashboard = () => {
     }, []);
 
     const getChecklistCard = () => {
-        if (userRolesLower.some(r => r.includes("tecnico") || r.includes("responsável"))) {
+        if (userRolesLower.some(r => r.includes("agent") || r.includes("agent"))) {
             return {
                 description: "Confira a caixa de entrada de checklists dos seus atendimentos em linha!",
                 subDescription: "Caixa de entrada, Histórico de checklists, Engenharia de Setup, Monitores, Produção."

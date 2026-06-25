@@ -56,7 +56,7 @@ export const Layout = () => {
         let colorScheme = "gray";
         if (firstRole.includes("admin")) colorScheme = "purple";
         else if (firstRole.includes("requester")) colorScheme = "blue";
-        else if (firstRole.includes("tecnico") || firstRole.includes("responsável")) colorScheme = "orange";
+        else if (firstRole.includes("agent") || firstRole.includes("agent")) colorScheme = "orange";
 
         return <Badge colorScheme={colorScheme} variant="outline">{label}</Badge>;
     };

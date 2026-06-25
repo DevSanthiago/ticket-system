@@ -26,9 +26,9 @@ interface User {
 
 const ROLE_LABELS: Record<string, string> = {
     Requester: "Requester",
-    SetupAgent: "Responsável Setup",
-    AutomationAgent: "Responsável Automação",
-    TestAgent: "Responsável Teste",
+    SetupAgent: "Agente Setup",
+    AutomationAgent: "Agente Automação",
+    TestAgent: "Agente Teste",
     Admin: "Admin",
 };
 
